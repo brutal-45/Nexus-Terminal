@@ -423,7 +423,7 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 
 ## Guidelines
 
-This project is developed and maintained under **[brutaltools](https://github.com/brutaltools)**.
+This project is developed and maintained under **[Brutaltools](https://github.com/brutal-45)**.
 
 ### Development Principles
 
