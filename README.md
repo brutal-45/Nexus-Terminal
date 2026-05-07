@@ -7,7 +7,7 @@
 
 ---
 
-**Developed under [brutaltools](https://github.com/brutal-45)**
+**Developed under [Brutaltools](https://github.com/brutal-45)**
 
 ---
 
