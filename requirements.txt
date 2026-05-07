@@ -1,0 +1,13 @@
+# Nexus — Local Terminal AI Assistant
+# Developed under brutaltools
+# Core requirements (all optional — Nexus works with Python stdlib only)
+# Install these for the best experience:
+
+# Terminal display (recommended)
+rich>=13.0.0
+
+# YAML support for data tools
+pyyaml>=6.0
+
+# Optional: for better JSON/YAML handling
+orjson>=3.9.0
