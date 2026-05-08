@@ -5,7 +5,7 @@ Manages the REPL loop, LLM interaction, tool calling, and session lifecycle.
 This module is the heart of Nexus. It ties together:
 - The LLM backend for generating responses
 - The tool registry for executing actions
-- The safety validator for preventing destructive operations
+- The safety validator for preventing destructive operations 
 - The display system for rich terminal output
 - The conversation history for multi-turn context
 - The workspace detector for project awareness
