@@ -5,7 +5,7 @@
   Zero internet dependency. Full privacy. Terminal-native.
 </p>
 
----
+--- 
 
 **Developed under [Brutaltools](https://github.com/brutal-45)**
 
