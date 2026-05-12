@@ -5,7 +5,7 @@
 
 # Terminal display (recommended)
 rich>=13.0.0
-
+ 
 # YAML support for data tools
 pyyaml>=6.0
 
