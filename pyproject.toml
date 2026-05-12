@@ -7,7 +7,7 @@ name = "nexus"
 version = "1.0.0"
 description = "Nexus — Local Terminal AI Assistant | Developed under brutaltools"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10" 
 license = {text = "MIT"}
 
 [project.scripts]
