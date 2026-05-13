@@ -10,4 +10,4 @@ rich>=13.0.0
 pyyaml>=6.0
 
 # Optional: for better JSON/YAML handling
-orjson>=3.9.0
+orjson>=3.9.0 
