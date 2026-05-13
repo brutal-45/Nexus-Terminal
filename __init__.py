@@ -19,6 +19,6 @@ Developed under brutaltools.
 """
 
 __version__ = "1.0.0"
-__author__ = "brutaltools"
+__author__ = "BrutalTools"
 
 from nexus.main import Nexus
