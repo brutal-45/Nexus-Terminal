@@ -7,7 +7,7 @@ This module enables running Nexus directly as a Python module:
 
 All argument parsing and startup logic is delegated to nexus.main:main().
 
-Developed under brutaltools.
+Developed under BrutalTools.
 """
 
 import sys
