@@ -2,7 +2,7 @@
  
 Every tool call in Nexus **must** pass through :class:`SafetyValidator`
 before it is handed to the executor.  This is the single, centralised
-enforcement point for all safety rules.
+enforcement point for all safety rules. 
 """
 
 from __future__ import annotations
