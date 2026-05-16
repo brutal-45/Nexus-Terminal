@@ -9,7 +9,7 @@ from typing import Any, Callable, Dict, List, Optional
 class ToolParameter:
     """Describes a parameter for a tool."""
     name: str
-    type: str  # "string", "integer", "number", "boolean", "object", "array"
+    type: str  # "string", "integer", "number", "boolean", "object", "array" 
     description: str
     required: bool = True
     default: Any = None
