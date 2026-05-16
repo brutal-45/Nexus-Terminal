@@ -1,6 +1,6 @@
 """Safety rules and patterns for command validation."""
  
-import re
+import re 
 import os
 from dataclasses import dataclass, field
 from typing import List, Tuple, Optional
