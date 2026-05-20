@@ -2,7 +2,7 @@
 Nexus — An intelligent AI assistant running entirely on the user's local machine.
 Operates through the terminal with zero internet dependency for core functionality.
 
-Developed under brutaltools.
+Developed under BrutalTools
 """
 
 from setuptools import setup, find_packages
