@@ -550,4 +550,4 @@ class Display:
                 lines.append(f"{k}: {v}")
 
         prefix = " " * indent
-        return ("\n" + prefix).join(lines)
+        return ("\n" + prefix).join(lines) 
