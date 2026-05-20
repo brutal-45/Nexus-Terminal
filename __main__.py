@@ -1,4 +1,4 @@
-"""Entry point for: python -m nexus
+"""Entry point for: python -m nexus 
 
 This module enables running Nexus directly as a Python module:
     python -m nexus
