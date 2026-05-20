@@ -1,4 +1,4 @@
-# Nexus — Local Terminal AI Assistant
+# Nexus — Local Terminal AI Assistant 
 
 <p align="center">
   <strong>An intelligent AI assistant that runs entirely on your local machine.</strong><br>
