@@ -1,5 +1,5 @@
 # Nexus — Local Terminal AI Assistant
-# Developed under brutaltools
+# Developed under BrutalTools
 # Core requirements (all optional — Nexus works with Python stdlib only)
 # Install these for the best experience:
 
