@@ -1,5 +1,5 @@
 """Intent parser for Nexus — quick-action pattern matching.
-
+ 
 Provides a lightweight, regex-based intent recogniser that detects common
 user requests (file listing, system info, git commands, etc.) and maps
 them to tool calls without involving the LLM.
