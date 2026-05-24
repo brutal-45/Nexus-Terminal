@@ -79,7 +79,7 @@ def _detect_language(path: str) -> str:
 
 
 # =====================================================================
-# Tool implementations
+# Tool implementations 
 # =====================================================================
 
 def analyze_code(path: str) -> Dict[str, Any]:
