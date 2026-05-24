@@ -14,7 +14,7 @@ from nexus.tools.registry import ToolRegistry
 
 
 # =====================================================================
-# Internal state for background processes
+# Internal state for background processes 
 # =====================================================================
 
 _background_processes: Dict[int, Dict[str, Any]] = {}
