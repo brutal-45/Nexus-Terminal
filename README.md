@@ -13,7 +13,7 @@
 
 ## Table of Contents
 
-- [What is Nexus?](#what-is-nexus)
+- [What is Nexus?](#what-is-nexus) 
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
