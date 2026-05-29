@@ -15,7 +15,7 @@ Usage:
     nexus --backend ollama --model llama3
     nexus --config ~/.nexus/my_config.json
 
-Developed under brutaltools.
+Developed under BrutalTools.
 """
 
 __version__ = "1.0.0"
