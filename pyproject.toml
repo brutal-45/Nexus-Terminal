@@ -1,11 +1,11 @@
-[build-system] 
+[build-system]
 requires = ["setuptools>=65.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "nexus"
 version = "1.0.0"
-description = "Nexus — Local Terminal AI Assistant | Developed under brutaltools"
+description = "Nexus — Local Terminal AI Assistant | Developed under BrutalTools"
 readme = "README.md"
 requires-python = ">=3.10" 
 license = {text = "MIT"}
