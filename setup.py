@@ -1,8 +1,8 @@
 """
 Nexus — An intelligent AI assistant running entirely on the user's local machine.
-Operates through the terminal with zero internet dependency for core functionality. 
+Operates through the terminal with zero internet dependency for core functionality.
 
-Developed under BrutalTools
+Developed under brutal-45.
 """
 
 from setuptools import setup, find_packages
@@ -12,7 +12,7 @@ setup(
     version="1.0.0",
     description="Nexus — Local Terminal AI Assistant",
     long_description=open("README.md").read() if __import__("os").path.exists("README.md") else "",
-    author="brutaltools",
+    author="brutal-45",
     python_requires=">=3.10",
     packages=find_packages(),
     install_requires=[

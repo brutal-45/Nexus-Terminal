@@ -1,0 +1,4 @@
+#!/bin/bash
+# Nexus Terminal AI - Quick Start Script
+cd "$(dirname "$0")"
+node index.js "$@"

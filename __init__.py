@@ -1,4 +1,4 @@
-""" 
+"""
 Nexus — An intelligent AI assistant running entirely on the user's local machine.
 Operates through the terminal with zero internet dependency for core functionality.
 
@@ -15,10 +15,10 @@ Usage:
     nexus --backend ollama --model llama3
     nexus --config ~/.nexus/my_config.json
 
-Developed under BrutalTools.
+Developed under brutal-45.
 """
 
 __version__ = "1.0.0"
-__author__ = "BrutalTools"
+__author__ = "brutal-45"
 
 from nexus.main import Nexus

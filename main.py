@@ -1,20 +1,21 @@
-""" 
+"""
 Nexus — Core orchestrator.
 Manages the REPL loop, LLM interaction, tool calling, and session lifecycle.
 
-This module is the heart of Nexus. It ties together: 
+This module is the heart of Nexus. It ties together:
 - The LLM backend for generating responses
 - The tool registry for executing actions
-- The safety validator for preventing destructive operations 
+- The safety validator for preventing destructive operations
 - The display system for rich terminal output
 - The conversation history for multi-turn context
 - The workspace detector for project awareness
 - The intent parser for quick-action shortcuts
+- The interactive UI for model selection and setup
 
 The main entry point is the `main()` function, which parses CLI arguments
 and launches the interactive REPL loop via `Nexus.run()`.
 
-Developed under brutaltools.
+Developed under brutal-45.
 """
 
 import os
@@ -37,6 +38,7 @@ class Nexus:
     - Tool-calling loops with safety validation
     - Conversation history management
     - Context tracking for follow-up queries
+    - Interactive model selection and switching
 
     Usage:
         config = get_default_config()
@@ -270,7 +272,193 @@ class Nexus:
             self._show_help()
             return True
 
+        # ── NEW: Model switcher (arrow-key selection) ────────────────
+        if lower in ("model", "switch model", "models"):
+            self._switch_model()
+            return True
+
+        # ── NEW: Setup wizard ────────────────────────────────────────
+        if lower in ("setup", "wizard"):
+            self._run_setup()
+            return True
+
+        # ── NEW: View/edit config ────────────────────────────────────
+        if lower in ("config", "show config"):
+            self._show_config_ui()
+            return True
+
+        # ── NEW: Theme switcher ──────────────────────────────────────
+        if lower in ("theme", "change theme"):
+            self._switch_theme()
+            return True
+
+        # ── NEW: History viewer ──────────────────────────────────────
+        if lower in ("history", "hist"):
+            self._show_history()
+            return True
+
+        # ── NEW: Reload tools ────────────────────────────────────────
+        if lower in ("reload", "reload tools"):
+            self._tool_registry = None
+            self._safety_validator = None
+            _ = self.tools  # Force reload
+            self.display.info("Tools reloaded.")
+            return True
+
+        # ── NEW: Backend info ────────────────────────────────────────
+        if lower in ("backend", "health"):
+            self._check_backend_status()
+            return True
+
+        # ── NEW: Toggle streaming ────────────────────────────────────
+        if lower in ("stream", "toggle stream"):
+            self.config.streaming = not self.config.streaming
+            state = "ON" if self.config.streaming else "OFF"
+            self.display.info(f"Streaming: {state}")
+            return True
+
+        # ── NEW: Toggle tool calls display ───────────────────────────
+        if lower in ("verbose", "toggle verbose"):
+            self.config.show_tool_calls = not self.config.show_tool_calls
+            state = "ON" if self.config.show_tool_calls else "OFF"
+            self.display.info(f"Verbose tool calls: {state}")
+            return True
+
+        # ── NEW: Reset conversation ──────────────────────────────────
+        if lower in ("reset", "new session"):
+            self.history.clear()
+            self._total_tool_calls = 0
+            self._total_messages = 0
+            self._session_start_time = time.time()
+            self.display.info("Session reset. Starting fresh.")
+            return True
+
         return False
+
+    # ── New Interactive Commands ──────────────────────────────────────────
+
+    def _switch_model(self):
+        """Interactive model switcher with arrow-key selection."""
+        try:
+            from nexus.ui import model_switcher
+            updates = model_switcher(self.config)
+            if updates:
+                for key, value in updates.items():
+                    setattr(self.config, key, value)
+
+                # Reset LLM backend so it reloads with new config
+                self._llm = None
+
+                # Determine model name for display
+                if self.config.llm_backend == "ollama":
+                    model_name = self.config.ollama_model
+                else:
+                    model_name = self.config.openai_model
+
+                self.display.success(f"Switched to: {model_name}")
+
+                # Check the new backend
+                self._check_backend_status()
+            else:
+                self.display.info("Model switch cancelled.")
+        except ImportError:
+            self.display.warning("Interactive UI not available. Use: --model <name> flag")
+        except Exception as e:
+            self.display.error(f"Failed to switch model: {e}")
+
+    def _run_setup(self):
+        """Run the setup wizard interactively."""
+        try:
+            from nexus.ui import run_setup_wizard
+            updates = run_setup_wizard(self.config)
+            if updates:
+                for key, value in updates.items():
+                    setattr(self.config, key, value)
+
+                # Reset LLM backend so it reloads with new config
+                self._llm = None
+
+                # Also reset display if theme changed
+                if "theme" in updates:
+                    self._display = None
+
+                save_config(self.config)
+                self.display.success("Setup complete! Configuration saved.")
+
+                # Check the new backend
+                self._check_backend_status()
+            else:
+                self.display.info("Setup cancelled.")
+        except ImportError:
+            self.display.warning("Interactive UI not available.")
+        except Exception as e:
+            self.display.error(f"Setup failed: {e}")
+
+    def _show_config_ui(self):
+        """Show configuration in the interactive UI."""
+        try:
+            from nexus.ui import show_config
+            show_config(self.config)
+        except ImportError:
+            # Fallback: print config to terminal
+            self._show_stats()
+        except Exception as e:
+            self.display.error(f"Failed to show config: {e}")
+
+    def _switch_theme(self):
+        """Interactive theme switcher."""
+        try:
+            from nexus.ui import pick
+            themes = [
+                {"name": "monokai", "description": "Dark with vibrant colors (default)"},
+                {"name": "dark", "description": "Simple dark theme"},
+                {"name": "dracula", "description": "Purple-tinted dark theme"},
+                {"name": "light", "description": "Light background theme"},
+            ]
+
+            current = getattr(self.config, "theme", "monokai")
+            default_idx = next(
+                (i for i, t in enumerate(themes) if t["name"] == current),
+                0,
+            )
+
+            result = pick(
+                title="Select Theme",
+                subtitle=f"Currently: {current}",
+                options=themes,
+                selected=default_idx,
+            )
+
+            if result is not None:
+                self.config.theme = themes[result]["name"]
+                self._display = None  # Reset display to reload theme
+                self.display.success(f"Theme changed to: {self.config.theme}")
+        except ImportError:
+            self.display.warning("Interactive UI not available. Edit config.json to change theme.")
+        except Exception as e:
+            self.display.error(f"Failed to switch theme: {e}")
+
+    def _show_history(self):
+        """Show recent conversation history."""
+        try:
+            messages = self.history.get_messages()
+            if not messages:
+                self.display.info("No conversation history yet.")
+                return
+
+            self.display.info("─── Recent History ───")
+            for msg in messages[-10:]:  # Show last 10 messages
+                role = msg.get("role", "unknown")
+                content = msg.get("content", "")
+                if isinstance(content, str):
+                    # Truncate long messages
+                    preview = content[:100] + "..." if len(content) > 100 else content
+                    role_icon = "👤" if role == "user" else "🤖" if role == "assistant" else "⚙"
+                    self.display.info(f"  {role_icon} {role}: {preview}")
+        except Exception as e:
+            self.display.error(f"Failed to show history: {e}")
+
+    # ── Existing Commands ─────────────────────────────────────────────────
 
     def _show_stats(self):
         """Display current session statistics."""
@@ -287,6 +475,8 @@ class Nexus:
         self.display.info(f"  Total msgs:    {self._total_messages}")
         self.display.info(f"  Elapsed:       {self._format_duration(elapsed)}")
         self.display.info(f"  Tools loaded:  {len(ctx.get('tools_available', []))}")
+        self.display.info(f"  Streaming:     {'ON' if self.config.streaming else 'OFF'}")
+        self.display.info(f"  Verbose:       {'ON' if self.config.show_tool_calls else 'OFF'}")
 
     def _list_tools(self):
         """List all available tools with their descriptions."""
@@ -304,13 +494,26 @@ class Nexus:
     def _show_help(self):
         """Display help information about built-in commands."""
         self.display.info("─── Nexus Help ───")
-        self.display.info("  Built-in Commands:")
+        self.display.info("")
+        self.display.info("  Session Commands:")
         self.display.info("    exit / quit / bye    Exit Nexus")
         self.display.info("    clear                Clear conversation history")
+        self.display.info("    reset                Reset session (clear + restart stats)")
         self.display.info("    stats / info         Show session statistics")
-        self.display.info("    tools                List available tools")
-        self.display.info("    save config          Save current configuration")
-        self.display.info("    help / ?             Show this help message")
+        self.display.info("    history / hist       Show recent conversation history")
+        self.display.info("")
+        self.display.info("  Model & Backend:")
+        self.display.info("    model                Switch model (interactive arrow-key picker)")
+        self.display.info("    setup / wizard       Run setup wizard (backend, model, theme)")
+        self.display.info("    backend / health     Check LLM backend status")
+        self.display.info("    stream               Toggle streaming ON/OFF")
+        self.display.info("    verbose              Toggle verbose tool calls ON/OFF")
+        self.display.info("")
+        self.display.info("  Configuration:")
+        self.display.info("    config               View current configuration")
+        self.display.info("    theme                Change terminal color theme")
+        self.display.info("    save config          Save current configuration to disk")
+        self.display.info("    reload               Reload all tools")
         self.display.info("")
         self.display.info("  Quick Actions (bypass LLM):")
         self.display.info("    ls / dir             List files in current directory")
@@ -318,6 +521,8 @@ class Nexus:
         self.display.info("    cat <file>           Show file contents")
         self.display.info("    read <file>          Read file contents")
         self.display.info("    echo <text>          Echo text")
+        self.display.info("    $ <command>          Execute shell command")
+        self.display.info("    git status           Show git status")
         self.display.info("")
         self.display.info("  Natural Language:")
         self.display.info("    Just type naturally! Nexus will use the LLM")
@@ -376,6 +581,10 @@ class Nexus:
         if action is None:
             return False
 
+        # Handle internal quick actions that aren't tool calls
+        if action.tool_name.startswith("__"):
+            return self._handle_internal_action(action.tool_name)
+
         handler = self.tools.get_handler(action.tool_name)
         if handler is None:
             return False
@@ -394,6 +603,29 @@ class Nexus:
         except Exception as e:
             self.display.error(f"Quick action failed: {e}")
             return False
+
+    def _handle_internal_action(self, action_name: str) -> bool:
+        """Handle internal quick actions from the intent parser.
+
+        Args:
+            action_name: The internal action name (e.g., '__quit__', '__help__').
+
+        Returns:
+            True if the action was handled.
+        """
+        if action_name == "__quit__":
+            self._running = False
+            self.display.goodbye()
+        elif action_name == "__help__":
+            self._show_help()
+        elif action_name == "__clear__":
+            self.history.clear()
+            self.display.info("Session context cleared.")
+        elif action_name == "__history__":
+            self._show_history()
+        else:
+            return False
+        return True
 
     # ── LLM Message Processing ────────────────────────────────────────────
 
@@ -667,6 +899,9 @@ def main():
     Parses command-line arguments, loads configuration, creates the
     Nexus instance, and starts the interactive REPL loop.
 
+    On first run (no config file found), launches the interactive
+    setup wizard with arrow-key model selection.
+
     Returns:
         Exit code (0 for success, non-zero for errors).
     """
@@ -677,18 +912,21 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  nexus                          # Start with defaults (ollama + llama3)
-  nexus --backend ollama --model codellama
+  nexus                          # Start with setup wizard (first run) or defaults
+  nexus --backend ollama --model llama3
   nexus --backend openai_compatible --model my-model
+  nexus --backend mock           # No LLM server needed, tools still work
   nexus --no-tools               # Disable tool calling
   nexus --no-stream              # Disable streaming output
   nexus --session my-project     # Name the session
-  nexus --config ~/.nexus/custom.json
+  nexus --setup                  # Force run setup wizard
 
 Built-in Commands (in session):
   exit / quit / bye    Exit Nexus
-  clear                Clear conversation history
-  stats                Show session statistics
+  model                Switch model (interactive picker)
+  setup / wizard       Run setup wizard
+  theme                Change color theme
+  config               View configuration
   tools                List available tools
   help                 Show help message
         """,
@@ -737,6 +975,12 @@ Built-in Commands (in session):
         help="Working directory for file/shell operations",
     )
     parser.add_argument(
+        "--setup",
+        action="store_true",
+        default=False,
+        help="Force run the setup wizard on startup",
+    )
+    parser.add_argument(
         "--version", "-v",
         action="version",
         version=f"Nexus v{__import__('nexus').__version__}",
@@ -763,6 +1007,21 @@ Built-in Commands (in session):
         config.session_name = args.session
     if args.workdir:
         config.working_directory = args.workdir
+
+    # ── First-run setup wizard ────────────────────────────────────────
+    should_setup = args.setup
+    if not should_setup:
+        # Auto-detect first run
+        config_path = os.path.expanduser(config.config_file)
+        if not os.path.isfile(config_path):
+            should_setup = True
+
+    if should_setup:
+        try:
+            from nexus.ui import show_welcome
+            show_welcome(config)
+        except Exception:
+            pass  # If UI fails, just continue with defaults
 
     # Create and run Nexus
     mind = Nexus(config)
