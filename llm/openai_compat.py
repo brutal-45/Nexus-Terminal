@@ -14,7 +14,7 @@ The API follows the standard OpenAI Chat Completions format:
         "max_tokens": ...
     }
 
-Developed under brutaltools.
+Developed under brutal-45.
 
 Usage:
     backend = OpenAICompatBackend(config)
