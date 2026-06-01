@@ -4,11 +4,11 @@ The SYSTEM_PROMPT defines the full Nexus persona and is injected at the
 start of every LLM conversation.  `get_system_prompt()` dynamically
 personalises the prompt with workspace metadata.
 
-Developed under brutaltools.
+Developed under brutal-45.
 """
 
 from __future__ import annotations
- 
+
 import platform
 import sys
 from datetime import datetime

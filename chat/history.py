@@ -1,6 +1,6 @@
 """Conversation history manager for Nexus.
 
-Manages message history with token tracking, persistence, and export capabilities. 
+Manages message history with token tracking, persistence, and export capabilities.
 """
 
 from __future__ import annotations
