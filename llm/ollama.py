@@ -10,7 +10,7 @@ ollama is the recommended backend for Nexus as it:
 - Has a simple REST API
 - Supports a wide range of open-source models
 
-Developed under brutaltools.
+Developed under brutal-45.
 
 Usage:
     backend = OllamaBackend(config)

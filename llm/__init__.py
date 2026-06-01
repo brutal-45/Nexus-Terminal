@@ -9,7 +9,7 @@ Supported backends:
 - OpenAICompatBackend: For any openai-compatible API server
 - MockBackend: Returns predefined responses for testing and development
 
-Developed under brutaltools.
+Developed under brutal-45.
 
 Usage:
     from nexus.llm import get_backend

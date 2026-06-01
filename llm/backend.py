@@ -4,7 +4,7 @@ This module defines the interface that all LLM backends must implement.
 Each backend wraps a specific LLM service (ollama, openai-compatible servers,
 or a mock for testing) behind a common API.
 
-Developed under brutaltools.
+Developed under brutal-45.
 
 The key types are:
 - ToolCall: Represents a function/tool invocation requested by the LLM
