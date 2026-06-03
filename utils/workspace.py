@@ -1,4 +1,4 @@
-"""Workspace awareness for Nexus. 
+"""Workspace awareness for Nexus.
 
 Detects the user's environment at startup — operating system, project type,
 available tools, environment variables, etc. — and surfaces the information
