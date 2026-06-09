@@ -2,7 +2,7 @@
 
 This module enables running Nexus directly as a Python module:
     python -m nexus
-    python -m nexus --backend ollama --model llama3
+    python -m nexus --backend ollama --model llama3 
     python -m nexus --help
 
 All argument parsing and startup logic is delegated to nexus.main:main().
