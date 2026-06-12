@@ -1,4 +1,4 @@
-"""LLM backends for Nexus.
+"""LLM backends for Nexus. 
 
 This package provides a unified interface for communicating with various
 local LLM backends. Each backend implements the LLMBackend abstract interface
