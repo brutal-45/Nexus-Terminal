@@ -1,4 +1,4 @@
-"""Tool registry — manages all available tools for the LLM."""
+"""Tool registry — manages all available tools for the LLM.""" 
  
 import importlib
 from typing import Any, Callable, Dict, List, Optional, Type
