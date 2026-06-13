@@ -1,7 +1,7 @@
 """File management tools — read, write, edit, search, and manipulate files."""
 
 import difflib
-import os
+import os 
 import shutil
 import stat
 import tarfile
