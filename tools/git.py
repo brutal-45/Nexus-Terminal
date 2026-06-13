@@ -10,7 +10,7 @@ from nexus.tools.registry import ToolRegistry
 
 
 # =====================================================================
-# Helpers
+# Helpers 
 # =====================================================================
 
 def _resolve(path: Optional[str]) -> str:
