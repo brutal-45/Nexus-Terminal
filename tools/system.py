@@ -12,7 +12,7 @@ from nexus.tools.registry import ToolRegistry
 
 
 # =====================================================================
-# Helpers 
+# Helpers
 # =====================================================================
 
 def _run(cmd: str, timeout: int = 15) -> subprocess.CompletedProcess:
