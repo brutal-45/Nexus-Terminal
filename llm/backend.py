@@ -1,4 +1,4 @@
-"""Abstract base class for LLM backends. 
+"""Abstract base class for LLM backends.
 
 This module defines the interface that all LLM backends must implement.
 Each backend wraps a specific LLM service (ollama, openai-compatible servers,
