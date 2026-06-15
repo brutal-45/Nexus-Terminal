@@ -18,7 +18,7 @@ class DangerousPattern:
 
 
 # ---------------------------------------------------------------------------
-#  DANGEROUS PATTERNS – shell commands, SQL, system operations 
+#  DANGEROUS PATTERNS – shell commands, SQL, system operations
 # ---------------------------------------------------------------------------
 
 DANGEROUS_PATTERNS: List[DangerousPattern] = [
