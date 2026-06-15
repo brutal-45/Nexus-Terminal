@@ -21,7 +21,7 @@ from nexus.safety.rules import SafetyRules, DangerousPattern
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-#  Constants 
+#  Constants
 # ---------------------------------------------------------------------------
 
 # Tools that are considered harmless and can bypass pattern checks.
