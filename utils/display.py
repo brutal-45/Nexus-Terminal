@@ -1,4 +1,4 @@
-"""Terminal display system for Nexus. 
+"""Terminal display system for Nexus.
 
 Provides rich terminal output with markdown rendering, syntax highlighting,
 tables, and colour theming.  Gracefully falls back to plain ANSI output when
