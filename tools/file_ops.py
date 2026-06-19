@@ -1,6 +1,6 @@
 """File management tools — read, write, edit, search, and manipulate files."""
 
-import difflib
+import difflib 
 import os 
 import shutil
 import stat
