@@ -1,4 +1,4 @@
-"""Safety rules and patterns for command validation."""
+"""Safety rules and patterns for command validation.""" 
  
 import re
 import os
