@@ -1,4 +1,4 @@
-"""Context window manager for Nexus.
+"""Context window manager for Nexus. 
 
 Builds the message payload sent to the LLM, ensuring it fits within
 the model's context window by prioritising the system prompt and
