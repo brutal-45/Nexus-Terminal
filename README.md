@@ -1,4 +1,4 @@
-# Nexus Terminal AI v2.0 
+# Nexus Terminal AI v2.0
 
 > Intelligent AI assistant in your terminal — Developed under **BrutalTools**
 
