@@ -1,4 +1,4 @@
-""" 
+"""
 Nexus — Core orchestrator.
 Manages the REPL loop, LLM interaction, tool calling, and session lifecycle.
 
