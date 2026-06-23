@@ -1,4 +1,4 @@
-#!/usr/bin/env node 
+#!/usr/bin/env node
 
 /**
  * Nexus Terminal AI v2.0 — A beautiful terminal-based AI assistant
