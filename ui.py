@@ -1,4 +1,4 @@
-"""
+""" 
 Nexus — Interactive Terminal UI for setup and model selection.
 
 Provides a keyboard-driven (arrow keys) terminal interface for:
