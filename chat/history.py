@@ -1,4 +1,4 @@
-"""Conversation history manager for Nexus. 
+"""Conversation history manager for Nexus.
 
 Manages message history with token tracking, persistence, and export capabilities.
 """
