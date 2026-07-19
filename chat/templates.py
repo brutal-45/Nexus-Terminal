@@ -1,4 +1,4 @@
-"""System prompt templates for Nexus. 
+"""System prompt templates for Nexus.
 
 The SYSTEM_PROMPT defines the full Nexus persona and is injected at the
 start of every LLM conversation.  `get_system_prompt()` dynamically
