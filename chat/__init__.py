@@ -1,4 +1,4 @@
-"""Chat system for Nexus — history, context, and prompt templates.""" 
+"""Chat system for Nexus — history, context, and prompt templates."""
 
 from nexus.chat.history import ChatHistory
 from nexus.chat.context import ContextManager
