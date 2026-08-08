@@ -1,4 +1,4 @@
-"""ollama LLM backend — communicates with a local ollama server.
+"""ollama LLM backend — communicates with a local ollama server. 
 
 This module provides the ollamaBackend class, which connects to a locally
 running ollama instance for LLM inference.
