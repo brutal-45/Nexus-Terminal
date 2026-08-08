@@ -1,4 +1,4 @@
-"""System management tools — disk, memory, CPU, processes, network."""
+"""System management tools — disk, memory, CPU, processes, network.""" 
 
 import os
 import platform
