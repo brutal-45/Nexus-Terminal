@@ -1,4 +1,4 @@
-"""openai-compatible LLM backend. 
+"""openai-compatible LLM backend.
 
 This module provides the openaiCompatBackend class, which connects to any
 server that implements the openai chat completions API. Compatible servers
