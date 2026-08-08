@@ -1,4 +1,4 @@
-"""Mock LLM backend for testing and development.
+"""Mock LLM backend for testing and development. 
 
 This module provides the MockBackend class, which simulates LLM responses
 without requiring an actual LLM server. It is useful for:
